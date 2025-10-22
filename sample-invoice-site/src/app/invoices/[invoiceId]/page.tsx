@@ -15,8 +15,9 @@ type PageProps = {
   };
 };
 
-export default async function InvoicePage({ params }: PageProps) {
-  const invoiceIdStr = params?.invoiceId ?? "";
+export default async function InvoicePage({ params, }: {
+  params: Promise<{ invoiceId: string }>;}) {
+  const { invoiceId: invoiceIdStr } = await params;
   const numericId = Number(invoiceIdStr);
 
   if (!Number.isFinite(numericId)) {

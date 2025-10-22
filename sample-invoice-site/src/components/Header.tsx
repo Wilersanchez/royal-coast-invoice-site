@@ -32,12 +32,12 @@ const Header = () => {
           {/* Right: Auth */}
           <div className="flex items-center gap-4">
             <SignedOut>
-              <SignInButton mode="modal">
+              <SignInButton mode="modal" forceRedirectUrl={"/dashboard"}>
                 <Button>Sign In</Button>
               </SignInButton>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <UserButton/>
             </SignedIn>
           </div>
         </div>

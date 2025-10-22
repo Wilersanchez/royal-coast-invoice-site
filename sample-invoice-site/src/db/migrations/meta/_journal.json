@@ -15,6 +15,13 @@
       "when": 1761067073301,
       "tag": "0001_dashing_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761072261055,
+      "tag": "0002_volatile_sleeper",
+      "breakpoints": true
     }
   ]
 }

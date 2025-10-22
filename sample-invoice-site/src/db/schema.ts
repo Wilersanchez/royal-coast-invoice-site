@@ -9,7 +9,6 @@ export const Invoices = pgTable('invoices', {
     description: text('description').notNull(),
     userId: text('userId').notNull(),
     status: statusEnum('status').notNull(),
-
-    // billingName: text('billing_name').notNull(),
-    // billingEmail: text('billing_email').notNull(),
+    billingName: text('billing_name').notNull(),
+    billingEmail: text('billing_email').notNull(),
 });

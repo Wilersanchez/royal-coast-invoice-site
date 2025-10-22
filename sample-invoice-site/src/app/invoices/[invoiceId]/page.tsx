@@ -16,7 +16,7 @@ type PageProps = {
 };
 
 export default async function InvoicePage({ params }: PageProps) {
-  const invoiceIdStr = params.invoiceId ?? "";
+  const invoiceIdStr = params.invoiceId;
   const numericId = Number(invoiceIdStr);
 
   if (!Number.isFinite(numericId)) {

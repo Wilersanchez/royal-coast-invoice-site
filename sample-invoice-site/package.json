@@ -9,7 +9,7 @@
     "lint": "next lint",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "build:worker": "open-next@cloudflare build",
+    "build:worker": "opennextjs-cloudflare build",
     "deploy:worker": "wrangler deploy"
   },
   "dependencies": {

@@ -35,9 +35,9 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen grid grid-rows-[auto_1fr_auto]`}
         >
-          <Header />
+          
           {children}
-          <Footer />
+          
         </body>
       </html>
     </ClerkProvider>

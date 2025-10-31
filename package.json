@@ -9,7 +9,7 @@
     "lint": "next lint",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "build:worker": "opennextjs-cloudflare build",
+    "build:worker": "opennextjs-cloudflare build --config ./open-next.config.ts",
     "deploy:worker": "wrangler deploy"
   },
   "dependencies": {
@@ -25,12 +25,12 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
     "lucide-react": "^0.546.0",
-    "next": "^15.5.6",
+    "next": "15.5.6",
     "pg": "^8.16.3",
     "pizzip": "^3.2.0",
     "postgres": "^3.4.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7"
   },

@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export default async function InvoicePage(
-  { params }: { params: { invoiceId: string } }
+  { params }: { params: Promise<{ invoiceId: string }> }
 ) {
-  const { invoiceId } = params;
+  const { invoiceId } = await params;
   const numericId = Number(invoiceId);
 
   if (!Number.isFinite(numericId)) {

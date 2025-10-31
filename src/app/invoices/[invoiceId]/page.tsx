@@ -1,23 +1,18 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
+import { eq } from "drizzle-orm";
 
-import { eq } from 'drizzle-orm';
-
-import { db } from '@/db';
-import { Invoices } from '@/db/schema';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { db } from "@/db";
+import { Invoices } from "@/db/schema";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-type PageProps = {
-  params: {
-    invoiceId: string;
-  };
-};
-
-export default async function InvoicePage({ params }: PageProps) {
-  const invoiceIdStr = params.invoiceId;
-  const numericId = Number(invoiceIdStr);
+export default async function InvoicePage(
+  { params }: { params: { invoiceId: string } }
+) {
+  const { invoiceId } = params;
+  const numericId = Number(invoiceId);
 
   if (!Number.isFinite(numericId)) {
     throw new Error("Invalid Invoice ID");
@@ -37,7 +32,7 @@ export default async function InvoicePage({ params }: PageProps) {
     <main className="h-full max-w-5xl mx-auto my-12">
       <div className="flex justify-between mb-8">
         <h1 className="flex items-center gap-4 text-3xl text-left font-bold">
-          Invoice {invoiceIdStr}
+          Invoice {invoiceId}
           <Badge
             className={cn(
               "rounded-full capitalize",
@@ -64,7 +59,7 @@ export default async function InvoicePage({ params }: PageProps) {
           <strong className="block w-28 flex-shrink-0 font-medium text-sm">
             Invoice ID
           </strong>
-          <span>{invoiceIdStr}</span>
+          <span>{invoiceId}</span>
         </li>
 
         <li className="flex gap-4">

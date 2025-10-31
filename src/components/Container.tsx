@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
-// Use a type alias instead of an empty interface
 type ContainerProps = React.ComponentProps<"div">;
 
 const Container = ({ children, className, ...props }: ContainerProps) => {

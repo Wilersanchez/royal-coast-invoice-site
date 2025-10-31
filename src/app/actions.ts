@@ -5,8 +5,6 @@ import { Invoices } from '@/db/schema';
 import { db } from '@/db';
 import { auth } from '@clerk/nextjs/server';
 
-import { DXT } from 'docxtemplater';
-
 import fs from 'fs';
 import path from 'path';
 import PizZip from 'pizzip';

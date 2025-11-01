@@ -1,25 +1,47 @@
 // src/db/index.ts
-import postgres from 'postgres';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import * as schema from '@/db/schema';
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
+import { cache } from "react";
+import * as schema from "@/db/schema";
 
-// Prefer a Hyperdrive binding connection string if present; otherwise fall back to your Xata DATABASE_URL
-const connectionString =
-  (process.env.HYPERDRIVE_XATA && JSON.parse(process.env.HYPERDRIVE_XATA).connectionString) ||
-  process.env.DATABASE_URL;
+/**
+ * Build a pg Pool from Hyperdrive (prod) or DATABASE_URL (dev).
+ * On Workers, avoid reusing pooled sockets across requests.
+ */
+function makePoolFromEnv(env?: Record<string, any>) {
+  const hyperdriveConn: string | undefined =
+    env?.HYPERDRIVE?.connectionString ?? undefined;
 
-if (!connectionString) {
-  throw new Error('Missing connection string: set HYPERDRIVE_XATA or DATABASE_URL');
+  const connectionString =
+    hyperdriveConn || process.env.DATABASE_URL || "";
+
+  if (!connectionString) {
+    throw new Error(
+      "No DB connection string. Ensure Hyperdrive binding is set, or define DATABASE_URL for local dev."
+    );
+  }
+
+  // Important for Workers: don't keep hot sockets around
+  return new Pool({ connectionString, maxUses: 1 });
 }
 
-// Cloudflare Workers + postgres.js:
-export const client = postgres(connectionString, {
-  // Cloudflare Workers: disable prepared statements
-  // (they rely on connection state; Hyperdrive/edge benefits from stateless)
-  prepare: false,
-  // Your Xata URL already requires TLS; leaving this explicit is harmless
-  ssl: 'require',
-  max: 1, // keep tiny – Workers spin up per request
+/** For normal server requests (RSC/route handlers) */
+export const getDb = cache(() => {
+  const { env } = getCloudflareContext();
+  const pool = makePoolFromEnv(env);
+  return drizzle({ client: pool, schema });
 });
 
-export const db = drizzle(client, { schema });
+/** For static-ish loaders that require async env fetch (rare) */
+export const getDbAsync = cache(async () => {
+  const { env } = await getCloudflareContext({ async: true });
+  const pool = makePoolFromEnv(env);
+  return drizzle({ client: pool, schema });
+});
+
+/**
+ * Convenience export for code that expects `{ db }` (like your dashboard page).
+ * This resolves per-request thanks to Next’s `cache()` scoping.
+ */
+export const db = getDb();

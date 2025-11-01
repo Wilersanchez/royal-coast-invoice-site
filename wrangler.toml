@@ -3,7 +3,7 @@ main = ".open-next/worker/index.mjs"
 
 # Ensure Node.js compat AND populate process.env at runtime.
 # Easiest: bump the date to 2025-04-01 or later.
-compatibility_date = "2025-04-01"
+compatibility_date = "2025-02-04"
 compatibility_flags = ["nodejs_compat"]  # populate_process_env auto-enables with this date
 
 [vars]
@@ -19,7 +19,5 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWN
 NEXT_TELEMETRY_DISABLED = "1"
 
 [[hyperdrive]]
-binding = "HYPERDRIVE_XATA"
-# You can inline your Xata connection string directly here:
-connection_string = "postgresql://rcqsea:xau_tnMF9zspAuR9jCatf4HKNLb0tAHm2Mev3@us-east-1.sql.xata.sh/sample-invoice-site:main?sslmode=require"
-
+binding = "HYPERDRIVE"
+id = "efa3b48e319949a288dcaf9c4ef080a5

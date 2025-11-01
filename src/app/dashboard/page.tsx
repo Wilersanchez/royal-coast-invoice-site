@@ -1,5 +1,5 @@
 // src/app/dashboard/page.tsx
-export const runtime = 'edge';            // run on Workers-compatible runtime
+export const runtime = 'nodejs';         // run on Workers-compatible runtime
 export const dynamic = 'force-dynamic';   // never pre-render; always SSR
 export const revalidate = 0;              // disable ISR for this page
 

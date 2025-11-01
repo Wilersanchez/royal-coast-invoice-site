@@ -1,23 +1,20 @@
 name = "royal-coast-invoice-site"
 main = ".open-next/worker/index.mjs"
 
-# Ensure Node.js compat AND populate process.env at runtime.
-# Easiest: bump the date to 2025-04-01 or later.
-compatibility_date = "2025-02-04"
-compatibility_flags = ["nodejs_compat"]  # populate_process_env auto-enables with this date
+# Enable Node.js compat and populate process.env at runtime
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
 # Safe to expose publicly at runtime:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA"
-
-# Optional: quiet Next telemetry in runtime (harmless)
+# Optional: quiet Next telemetry in runtime
 NEXT_TELEMETRY_DISABLED = "1"
 
-# If you have per-environment overrides:
 [env.production.vars]
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA"
 NEXT_TELEMETRY_DISABLED = "1"
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
-id = "efa3b48e319949a288dcaf9c4ef080a5
+id = "efa3b48e319949a288dcaf9c4ef080a5"

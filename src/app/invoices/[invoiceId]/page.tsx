@@ -11,9 +11,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function InvoicePage(
-  { params }: { params: { invoiceId: string } }   // <-- not a Promise
+  { params }: { params: Promise<{ invoiceId: string }> }  // <-- Promise to satisfy your PageProps
 ) {
-  const { invoiceId } = params;
+  const { invoiceId } = await params;                     // <-- await it
   const numericId = Number(invoiceId);
   if (!Number.isFinite(numericId)) throw new Error("Invalid Invoice ID");
 

@@ -1,8 +1,19 @@
 name = "royal-coast-invoice-site"
 main = ".open-next/worker/index.mjs"
 
-# keep or bump; it's fine
-compatibility_date = "2024-09-01"
+# Ensure Node.js compat AND populate process.env at runtime.
+# Easiest: bump the date to 2025-04-01 or later.
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]  # populate_process_env auto-enables with this date
 
-# NEW: v4 syntax replaces `node_compat = true`
-compatibility_flags = ["nodejs_compat"]
+[vars]
+# Safe to expose publicly at runtime:
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA"
+
+# Optional: quiet Next telemetry in runtime (harmless)
+NEXT_TELEMETRY_DISABLED = "1"
+
+# If you have per-environment overrides:
+[env.production.vars]
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA"
+NEXT_TELEMETRY_DISABLED = "1"

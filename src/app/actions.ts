@@ -1,69 +1,42 @@
+// src/app/actions.ts
 "use server";
 
-import { redirect } from 'next/navigation';
-import { Invoices } from '@/db/schema';
-import { db } from '@/db';
-import { auth } from '@clerk/nextjs/server';
-
-import fs from 'fs';
-import path from 'path';
-import PizZip from 'pizzip';
-import Docxtemplater from 'docxtemplater';
+import { redirect } from "next/navigation";
+import { Invoices } from "@/db/schema";
+import { openDb } from "@/db";
+import { auth } from "@clerk/nextjs/server";
 
 export async function createAction(formData: FormData) {
-    const session = await auth();
-    const value = Math.floor(parseFloat(String(formData.get('value'))) * 100);
-    const description = formData.get('description') as string;
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
+  const session = await auth();
+  const userId = session.userId;
+  if (!userId) redirect("/sign-in");
 
-    const userId = session.userId;
-    if ( !userId ) {
-        redirect('/sign-in');
-    }
+  const value = Math.floor(parseFloat(String(formData.get("value"))) * 100);
+  const description = String(formData.get("description") ?? "");
+  const name = String(formData.get("name") ?? "");
+  const email = String(formData.get("email") ?? "");
 
+  const { db, client } = await openDb();
+  try {
     const results = await db.insert(Invoices)
-        .values({
-            value,
-            description,
-            userId,
-            status: 'open',
-            billingName: name,
-            billingEmail: email
-        })
-        .returning({
-            id: Invoices.id
-        });
+      .values({
+        value,
+        description,
+        userId,
+        status: "open",
+        billingName: name,     // ensure your schema has these exact camelCase columns
+        billingEmail: email,
+      })
+      .returning({ id: Invoices.id });
 
     const insertedId = results?.[0]?.id;
+    if (!insertedId) throw new Error("Invoice creation failed: ID not returned");
 
-    if (!insertedId) {
-        throw new Error("Invoice creation failed: ID not returned");
-    }
+    // TODO (optional): generate DOCX using a fetch() of a template stored in /public or R2,
+    // then stream it back from an API route or upload to R2 and give the user a link.
 
-    const templatePath = path.resolve("src", "templates", "invoice_document_v2.docx");
-    const templateContent = fs.readFileSync(templatePath, "binary");
-    const zip = new PizZip(templateContent);
-    const doc = new Docxtemplater(zip);
-
-    doc.setData({
-        name,
-        value: `$${(value / 100).toFixed(2)}`,
-        description,
-        date: new Date().toLocaleDateString(),
-        invoiceId: insertedId,
-    });
-
-     try {
-            doc.render();
-        } catch (error) {
-            console.error("Error generating document:", error);
-            throw error;
-        }
-
-    const buffer = doc.getZip().generate({ type: "nodebuffer" });
-    const outputPath = path.resolve("public", `invoice-${insertedId}.docx`);
-    fs.writeFileSync(outputPath, buffer);
-
-    redirect(`/invoices/${insertedId}`)
+    redirect(`/invoices/${insertedId}`);
+  } finally {
+    await client.end();
+  }
 }

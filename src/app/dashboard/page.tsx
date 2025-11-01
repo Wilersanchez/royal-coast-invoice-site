@@ -1,9 +1,8 @@
-// src/app/dashboard/page.tsx
-export const runtime = 'nodejs';         // run on Workers-compatible runtime
-export const dynamic = 'force-dynamic';   // never pre-render; always SSR
-export const revalidate = 0;              // disable ISR for this page
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-import { db } from '@/db';
+import { openDb } from '@/db';
 import { Invoices } from '@/db/schema';
 import Container from '@/components/Container';
 import {
@@ -21,13 +20,15 @@ type InvoiceRow = typeof Invoices.$inferSelect;
 export default async function DashboardPage() {
   let results: InvoiceRow[] = [];
 
-  // Make sure DB access only happens at request time (not at module top-level)
+  const { db, client } = await openDb(); // connect per-request
   try {
     results = await db.select().from(Invoices);
   } catch (e) {
-    // If the DB is unreachable during build or env is missing, fail gracefully
-    // (You can log e to an observability tool if you want)
+    // Optional: log e somewhere
     results = [];
+  } finally {
+    // Important: close connection on Workers so Hyperdrive can recycle it
+    await client.end();
   }
 
   return (

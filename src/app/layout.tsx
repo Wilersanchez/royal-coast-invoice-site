@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Royal Coast Limo Services",
   description: "Reliable transportation and courier services in South Florida.",
+  icons: [{ rel: "icon", url: "/royal_coast_transparent.png" }],
 };
 
 export default function RootLayout({

@@ -30,6 +30,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/_not-found": {
       "initialStatus": 404,
       "experimentalBypassFor": [
@@ -46,30 +70,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/_not-found",
       "dataRoute": "/_not-found.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -107,8 +107,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "67c9de5226fa2fd2aafb7b36fdfdcd3f",
-    "previewModeSigningKey": "ed84472cbfc4464b249f5887629d68b18753b877b8a33a9db98a322fe1e71ab1",
-    "previewModeEncryptionKey": "38dfca047545a28548ee5fab8102d21336aa0d848b93645f06270017c8964cbe"
+    "previewModeId": "118d29e2006d65678605ea1deae51c6d",
+    "previewModeSigningKey": "c8ca8e4eb09fb06303bf0878d0671b4390035f2ad03d8dff153668229ffb5640",
+    "previewModeEncryptionKey": "82b594e58583becde04e232d8579ae9dad8e104625a92df81c406bf781c2ff85"
   }
 }

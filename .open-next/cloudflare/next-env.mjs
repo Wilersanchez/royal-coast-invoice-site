@@ -1,0 +1,3 @@
+export const production = {"DATABASE_URL":"postgresql://rcqsea:xau_tnMF9zspAuR9jCatf4HKNLb0tAHm2Mev3@us-east-1.sql.xata.sh/sample-invoice-site:main?sslmode=require","NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA","CLERK_SECRET_KEY":"sk_test_8wF377a5VPS00rty9udUAADvFRpvJrYZJGPd8LDnD8"};
+export const development = {"DATABASE_URL":"postgresql://rcqsea:xau_tnMF9zspAuR9jCatf4HKNLb0tAHm2Mev3@us-east-1.sql.xata.sh/sample-invoice-site:main?sslmode=require","NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_d2FudGVkLWNyaWNrZXQtMzkuY2xlcmsuYWNjb3VudHMuZGV2JA","CLERK_SECRET_KEY":"sk_test_8wF377a5VPS00rty9udUAADvFRpvJrYZJGPd8LDnD8"};
+export const test = {};

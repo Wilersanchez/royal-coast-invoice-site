@@ -4,7 +4,7 @@
   "/invoices/new/page": "/invoices/new",
   "/page": "/",
   "/sign-up/[[...sign-up]]/page": "/sign-up/[[...sign-up]]",
-  "/invoices/[invoiceId]/page": "/invoices/[invoiceId]",
+  "/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]",
   "/dashboard/page": "/dashboard",
-  "/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]"
+  "/invoices/[invoiceId]/page": "/invoices/[invoiceId]"
 }
